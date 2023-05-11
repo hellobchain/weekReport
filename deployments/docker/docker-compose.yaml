@@ -1,0 +1,18 @@
+version: "3"
+networks:
+  sfnetwork:
+services:
+  weekreport-server:
+    image: weekreport-server:v1.0
+    restart: always
+    container_name: weekreport-server
+    working_dir: /weekreport-server
+    command: java -jar weekreport.jar --spring.conf.location=classpath:/,classpath:/config/,file:./,file:./config/,file:/weekreport-server/config/
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ../config:/weekreport-server/config
+      - ./weekreport:/weekreport-server/content
+    ports:
+      - "443:3000"
+    networks:
+      - sfnetwork

@@ -1,0 +1,23 @@
+version: '3'
+networks:
+  sfnetwork:
+services:
+  weekreport_mysql:
+    restart: always
+    image: mysql:5.7
+    container_name: weekreport_mysql
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: weekreport123456
+      LANG: en_US.UTF-8
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --max_allowed_packet=200M
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./sql:/var/lib/sql
+      - ./mysql/logs:/var/log/mysql
+      - ./mysql/data:/var/lib/mysql
+    networks:
+      - sfnetwork
